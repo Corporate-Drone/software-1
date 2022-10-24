@@ -3,7 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class MainMenuController {
+public class ModifyPartFormController {
 
     @FXML
     void onActionExit(ActionEvent event) {
