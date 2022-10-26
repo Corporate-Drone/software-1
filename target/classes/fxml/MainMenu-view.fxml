@@ -22,12 +22,12 @@
             <TableColumn prefWidth="125.0" text="Price/ Cost Per Unit" />
          </columns>
       </TableView>
-      <Button fx:id="addPartsButton" layoutX="337.0" layoutY="368.0" mnemonicParsing="false" text="Add" />
-      <Button fx:id="modifyPartsButton" layoutX="411.0" layoutY="368.0" mnemonicParsing="false" text="Modify" />
-      <Button fx:id="deletePartsButton" layoutX="500.0" layoutY="368.0" mnemonicParsing="false" text="Delete" />
-      <Button fx:id="deleteProductsButton" layoutX="1096.0" layoutY="368.0" mnemonicParsing="false" text="Delete" />
-      <Button fx:id="modifyProductsButton" layoutX="1003.0" layoutY="368.0" mnemonicParsing="false" text="Modify" />
-      <Button fx:id="addProductsButton" layoutX="933.0" layoutY="368.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addPartsButton" layoutX="337.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionAddParts" text="Add" />
+      <Button fx:id="modifyPartsButton" layoutX="411.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionModifyParts" text="Modify" />
+      <Button fx:id="deletePartsButton" layoutX="500.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionDeleteParts" text="Delete" />
+      <Button fx:id="deleteProductsButton" layoutX="1096.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionDeleteProduct" text="Delete" />
+      <Button fx:id="modifyProductsButton" layoutX="1003.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionModifyProduct" text="Modify" />
+      <Button fx:id="addProductsButton" layoutX="933.0" layoutY="368.0" mnemonicParsing="false" onAction="#onActionAddProduct" text="Add" />
       <TextField fx:id="searchPartsBar" layoutX="403.0" layoutY="107.0" promptText="Search by Part ID or Name" />
       <TextField fx:id="searchProductsBar" layoutX="999.0" layoutY="107.0" promptText="Search by Product ID or Name" />
       <Button fx:id="exitButton" layoutX="1108.0" layoutY="452.0" mnemonicParsing="false" onAction="#onActionExit" text="Exit" />
@@ -41,7 +41,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="648.0" layoutY="106.0" text="Parts">
+      <Label layoutX="648.0" layoutY="106.0" text="Products">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
