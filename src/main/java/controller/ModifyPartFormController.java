@@ -7,6 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +20,28 @@ public class ModifyPartFormController implements Initializable {
 
     Stage stage;
     Parent scene;
+
+    @FXML
+    private ToggleGroup ModifyPart;
+
+    @FXML
+    private ToggleButton modifyPartInHouseButton;
+
+    @FXML
+    private ToggleButton modifyPartOutsourcedButton;
+
+    @FXML
+    private Label toggleLabel;
+
+    @FXML
+    void onActionTogglePart(ActionEvent event) throws IOException {
+        if(event.getSource() == modifyPartOutsourcedButton) {
+            toggleLabel.setText("Company Name");
+        } else {
+            toggleLabel.setText("Machine ID");
+        }
+    }
+
 
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {

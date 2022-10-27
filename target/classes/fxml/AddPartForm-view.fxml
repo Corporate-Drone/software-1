@@ -31,7 +31,7 @@
                   <Label text="Inv" GridPane.rowIndex="2" />
                   <Label text="Price/Cost" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.rowIndex="4" />
-                  <Label text="Machine ID" GridPane.rowIndex="5" />
+                  <Label fx:id="toggleLabel" text="Machine ID" GridPane.rowIndex="5" />
                   <Label text="Min" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                   <TextField editable="false" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                   <TextField fx:id="addPartInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -46,12 +46,12 @@
       </VBox>
       <HBox layoutX="184.0" layoutY="62.0" prefHeight="25.0" prefWidth="250.0">
          <children>
-            <RadioButton fx:id="addPartInHouseButton" mnemonicParsing="false" selected="true" text="In-House">
+            <RadioButton fx:id="addPartInHouseButton" mnemonicParsing="false" onAction="#onActionTogglePart" selected="true" text="In-House">
                <toggleGroup>
                   <ToggleGroup fx:id="AddPart" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="addPartOutsourcedButton" mnemonicParsing="false" text="Outsourced" toggleGroup="$AddPart">
+            <RadioButton fx:id="addPartOutsourcedButton" mnemonicParsing="false" onAction="#onActionTogglePart" text="Outsourced" toggleGroup="$AddPart">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>
