@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Inventory;
+import model.Part;
+import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +22,63 @@ public class MainMenuController implements Initializable {
 
     Stage stage;
     Parent scene;
+
+    @FXML
+    private TableView<Part> partsTableView;
+
+    @FXML
+    private TableView<Product> productsTableView;
+
+    @FXML
+    private Button addPartsButton;
+
+    @FXML
+    private Button addProductsButton;
+
+    @FXML
+    private Button deletePartsButton;
+
+    @FXML
+    private Button deleteProductsButton;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
+    private Button modifyPartsButton;
+
+    @FXML
+    private Button modifyProductsButton;
+
+    @FXML
+    private TableColumn<Part, Integer> partIdCol;
+
+    @FXML
+    private TableColumn<Part, Integer> partInventoryLevelCol;
+
+    @FXML
+    private TableColumn<Part, String> partNameCol;
+
+    @FXML
+    private TableColumn<Part, Double> partPriceCol;
+
+    @FXML
+    private TableColumn<Product, Integer> productIdCol;
+
+    @FXML
+    private TableColumn<Product, Integer> productInventoryLevelCol;
+
+    @FXML
+    private TableColumn<Product, String> productNameCol;
+
+    @FXML
+    private TableColumn<Part, Double> productPriceCol;
+
+    @FXML
+    private TextField searchPartsBar;
+
+    @FXML
+    private TextField searchProductsBar;
 
 
     @FXML
@@ -114,6 +173,16 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        partsTableView.setItems(Inventory.getAllParts());
+        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        productsTableView.setItems(Inventory.getAllProducts());
+        productIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 }

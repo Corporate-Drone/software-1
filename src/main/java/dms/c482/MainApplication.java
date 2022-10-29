@@ -4,6 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
+import model.Product;
 
 import java.io.IOException;
 
@@ -18,6 +22,16 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        InHouse inhouse1 = new InHouse(1,"Sac",19.00,5,1,7,87);
+        Inventory.addPart(inhouse1);
+
+        Outsourced outsourced1 = new Outsourced(2,"Vac",27.00,12,1,13,"Nintendo");
+        Inventory.addPart(outsourced1);
+
+        Product product1 = new Product(1,"Ski",99.99,5,1,25);
+        Inventory.addProduct(product1);
+
+
         launch();
 
     }

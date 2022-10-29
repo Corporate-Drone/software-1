@@ -7,4 +7,5 @@ module dms.c482 {
     exports dms.c482;
     exports controller;
     opens controller to javafx.fxml;
+    opens model to javafx.graphics, javafx.fxml, javafx.base;
 }
