@@ -41,6 +41,32 @@ public class Inventory {
         return false;
     }
 
+    //delete part
+    public static boolean deletePart(Part selectedPart) {
+        for(Part part : getAllParts()) {
+            if(part.getId() == selectedPart.getId()) {
+                //returns true or false
+                return getAllParts().remove(part);
+            }
+        }
+        //no id found
+        return false;
+    }
+
+    //delete product
+    public static boolean deleteProduct(Product selectedProduct) {
+        for(Product product : getAllProducts()) {
+            if(product.getId() == selectedProduct.getId()) {
+                //call remove associated part
+
+                //returns true or false
+                return getAllProducts().remove(product);
+            }
+        }
+        //no id found
+        return false;
+    }
+
 
 //    lookupPart(partId:int):Part-x
 //    lookupProduct(productId:int):Product-x

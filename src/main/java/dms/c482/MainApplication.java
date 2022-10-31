@@ -29,7 +29,9 @@ public class MainApplication extends Application {
         Inventory.addPart(outsourced1);
 
         Product product1 = new Product(1,"Ski",99.99,5,1,25);
+        Product product2 = new Product(2,"Frc",14.99,7,1,40);
         Inventory.addProduct(product1);
+        Inventory.addProduct(product2);
 
 
         launch();

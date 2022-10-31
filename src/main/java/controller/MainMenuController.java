@@ -115,13 +115,20 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionDeleteParts(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
+        //check if the table has an item selected before attempting action
+        if (partsTableView.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
 
-        Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK) {
-            //delete part
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                //remove part from Inventory
+                Part selectedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
+                Inventory.deletePart(selectedPart);
+                partsTableView.refresh();
+            }
         }
+
     }
 
     @FXML
@@ -156,12 +163,18 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionDeleteProduct(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
+        //check if the table has an item selected before attempting action
+        if (productsTableView.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
 
-        Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK) {
-            //delete product
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                //remove part from Inventory
+                Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+                Inventory.deleteProduct(selectedProduct);
+                productsTableView.refresh();
+            }
         }
     }
 
