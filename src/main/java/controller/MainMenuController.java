@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -159,6 +160,52 @@ public class MainMenuController implements Initializable {
 
         //show stage
         stage.show();
+    }
+
+    @FXML
+    void onPartsTableSearch(ActionEvent event) throws IOException {
+        String queryString = searchPartsBar.getText();
+        ObservableList<Part> parts = Inventory.searchByPartName(queryString);
+
+        try {
+            if(parts.size() == 0) {
+                int partId = Integer.parseInt(queryString);
+                Part foundPart = Inventory.lookupPart(partId);
+                if(foundPart != null) {
+                    parts.add(foundPart);
+                }
+            }
+        } catch(NumberFormatException e) {
+            //ignore
+        }
+        if(parts.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        partsTableView.setItems(parts);
+    }
+
+    @FXML
+    void onProductsTableSearch(ActionEvent event) throws IOException {
+        String queryString = searchProductsBar.getText();
+        ObservableList<Product> products = Inventory.searchByProductName(queryString);
+
+        try {
+            if(products.size() == 0) {
+                int productId = Integer.parseInt(queryString);
+                Product foundProduct = Inventory.lookupProduct(productId);
+                if(foundProduct != null) {
+                    products.add(foundProduct);
+                }
+            }
+        } catch(NumberFormatException e) {
+            //ignore
+        }
+        if(products.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        productsTableView.setItems(products);
     }
 
     @FXML

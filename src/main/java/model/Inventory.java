@@ -17,28 +17,48 @@ public class Inventory {
         allProducts.add(product);
     }
 
-    //search part method
-    public boolean lookupPart(int partId){
-        //loops through all dogs
-        for(Part part : Inventory.getAllParts()) {
-            if(part.getId() == partId) {
-                return true;
+    public static ObservableList<Part> searchByPartName(String partName) {
+        ObservableList<Part> namedParts = FXCollections.observableArrayList();
+        ObservableList<Part> allParts = getAllParts();
+
+        for(Part part : allParts) {
+            if(part.getName().contains(partName)) {
+                namedParts.add(part);
             }
         }
-        //return false if no id found
-        return false;
+        return namedParts;
     }
 
-    //search method
-    public boolean lookupProduct(int productId){
-        //loops through all dogs
-        for(Product product : Inventory.getAllProducts()) {
-            if(product.getId() == productId) {
-                return true;
+    //search part method
+    public static Part lookupPart(int partId){
+        for(Part part : Inventory.getAllParts()) {
+            if(part.getId() == partId) {
+                return part;
             }
         }
-        //return false if no id found
-        return false;
+        return null;
+    }
+
+    public static ObservableList<Product> searchByProductName(String productName) {
+        ObservableList<Product> namedProducts = FXCollections.observableArrayList();
+        ObservableList<Product> allProducts = getAllProducts();
+
+        for(Product product : allProducts) {
+            if(product.getName().contains(productName)) {
+                namedProducts.add(product);
+            }
+        }
+        return namedProducts;
+    }
+
+    //search product method
+    public static Product lookupProduct(int productId){
+        for(Product product : Inventory.getAllProducts()) {
+            if(product.getId() == productId) {
+                return product;
+            }
+        }
+        return null;
     }
 
     //delete part
