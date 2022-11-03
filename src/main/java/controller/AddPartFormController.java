@@ -6,11 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,13 +25,38 @@ public class AddPartFormController implements Initializable {
     private ToggleGroup AddPart;
 
     @FXML
-    private ToggleButton addPartInHouseButton;
+    private Button addPartCancelFormButton;
 
     @FXML
-    private ToggleButton addPartOutsourcedButton;
+    private RadioButton addPartInHouseButton;
+
+    @FXML
+    private TextField addPartInventoryField;
+
+    @FXML
+    private TextField addPartToggleField;
+
+    @FXML
+    private TextField addPartMaxField;
+
+    @FXML
+    private TextField addPartMinField;
+
+    @FXML
+    private TextField addPartNameField;
+
+    @FXML
+    private RadioButton addPartOutsourcedButton;
+
+    @FXML
+    private TextField addPartPriceField;
+
+    @FXML
+    private Button addPartSaveFormButton;
 
     @FXML
     private Label toggleLabel;
+
 
     @FXML
     void onActionTogglePart(ActionEvent event) throws IOException {
@@ -43,7 +68,43 @@ public class AddPartFormController implements Initializable {
     }
 
     @FXML
-    void onActionSave(ActionEvent event) throws IOException{
+    void onActionSavePart(ActionEvent event) throws IOException{
+        try {
+            int partId = Inventory.getAllParts().size() + 1;
+            String partName = addPartNameField.getText();
+            int partInventory = Integer.parseInt(addPartInventoryField.getText());
+            double partPrice = Double.parseDouble(addPartPriceField.getText());
+            int partMax = Integer.parseInt(addPartMaxField.getText());
+            int partMin = Integer.parseInt(addPartMinField.getText());
+            boolean partInHouse;
+
+            //Check radio button selected
+            if(addPartInHouseButton.isSelected()) {
+                partInHouse = true;
+                //add InHouse part
+                int partMachineId = Integer.parseInt(addPartToggleField.getText());
+                InHouse newInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
+                Inventory.addPart(newInhousePart);
+            } else {
+                partInHouse = false;
+                //add Outsourced part
+                String partCompanyName = addPartToggleField.getText();
+                Outsourced newOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
+                Inventory.addPart(newOutsourcedPart);
+            }
+
+            //redirect after saving
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("Please enter a valid value for each Text Field!");
+            alert.showAndWait();
+        }
 
     }
 

@@ -37,7 +37,7 @@
                   <TextField fx:id="addPartInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="addPartPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="addPartMaxField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="addPartMachineField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="addPartToggleField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="addPartMinField" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <TextField fx:id="addPartNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
@@ -58,7 +58,7 @@
             </RadioButton>
          </children></HBox>
       <Button fx:id="addPartCancelFormButton" layoutX="449.0" layoutY="343.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
-      <Button fx:id="addPartSaveFormButton" layoutX="384.0" layoutY="343.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="addPartSaveFormButton" layoutX="384.0" layoutY="343.0" mnemonicParsing="false" onAction="#onActionSavePart" text="Save" />
       <Label layoutX="52.0" layoutY="44.0" text="Add Part">
          <font>
             <Font name="System Bold" size="24.0" />

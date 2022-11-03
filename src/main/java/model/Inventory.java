@@ -88,14 +88,9 @@ public class Inventory {
     }
 
 
-//    lookupPart(partId:int):Part-x
-//    lookupProduct(productId:int):Product-x
-//    lookupPart(partName:String):ObservableList<Part>
-//    lookupProduct(productName:String):ObservableList<Product>
+
 //    updatePart(index:int, selectedPart:Part):void
 //    updateProduct(index:int, newProduct:Product):void
-//    deletePart(selectedPart:Part):boolean
-//    deleteProduct(selectedProduct:Product):boolean
 
     public static ObservableList<Part> getAllParts() {
         return allParts;

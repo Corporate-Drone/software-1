@@ -33,11 +33,11 @@
                   <Label text="Max" GridPane.rowIndex="4" />
                   <Label fx:id="toggleLabel" text="Machine ID" GridPane.rowIndex="5" />
                   <Label text="Min" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <TextField editable="false" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
+                  <TextField fx:id="modifyPartId" editable="false" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                   <TextField fx:id="modifyPartInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="modifyPartPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="modifyPartMaxField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="modifyPartMachineField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="modifyToggleField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="modifyPartMinField" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <TextField fx:id="modifyPartNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
@@ -58,7 +58,7 @@
             </RadioButton>
          </children></HBox>
       <Button fx:id="modifyPartCancelFormButton" layoutX="449.0" layoutY="343.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
-      <Button fx:id="saveModifyPartFormButton" layoutX="384.0" layoutY="343.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="saveModifyPartFormButton" layoutX="384.0" layoutY="343.0" mnemonicParsing="false" onAction="#onActionSavePart" text="Save" />
       <Label layoutX="52.0" layoutY="44.0" text="Modify Part">
          <font>
             <Font name="System Bold" size="18.0" />

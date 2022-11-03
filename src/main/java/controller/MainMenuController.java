@@ -100,17 +100,20 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionModifyParts(ActionEvent event) throws IOException {
-        //casing, lets event handler know cause of event is a button
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow(); //reference variable
+        if(partsTableView.getSelectionModel().getSelectedItem() != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ModifyPartForm-view.fxml"));
+            loader.load();
 
-        //load fxml
-        scene = FXMLLoader.load(getClass().getResource("/fxml/ModifyPartForm-view.fxml"));
+            ModifyPartFormController MPController = loader.getController(); //loads controller associated with fxml doc
+            MPController.sendPart(partsTableView.getSelectionModel().getSelectedItem());
 
-        //add scene to stage
-        stage.setScene(new Scene(scene));
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
 
-        //show stage
-        stage.show();
 
     }
 
@@ -244,5 +247,6 @@ public class MainMenuController implements Initializable {
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
     }
 }

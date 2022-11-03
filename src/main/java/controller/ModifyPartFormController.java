@@ -6,11 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Outsourced;
+import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,13 +25,61 @@ public class ModifyPartFormController implements Initializable {
     private ToggleGroup ModifyPart;
 
     @FXML
-    private ToggleButton modifyPartInHouseButton;
+    private Button modifyPartCancelFormButton;
 
     @FXML
-    private ToggleButton modifyPartOutsourcedButton;
+    private RadioButton modifyPartInHouseButton;
+
+    @FXML
+    private TextField modifyPartId;
+
+    @FXML
+    private TextField modifyPartInventoryField;
+
+    @FXML
+    private TextField modifyToggleField;
+
+    @FXML
+    private TextField modifyPartMaxField;
+
+    @FXML
+    private TextField modifyPartMinField;
+
+    @FXML
+    private TextField modifyPartNameField;
+
+    @FXML
+    private RadioButton modifyPartOutsourcedButton;
+
+    @FXML
+    private TextField modifyPartPriceField;
+
+    @FXML
+    private Button saveModifyPartFormButton;
 
     @FXML
     private Label toggleLabel;
+
+    public void sendPart(Part part) {
+        modifyPartId.setText(String.valueOf(part.getId()));
+        modifyPartNameField.setText(String.valueOf(part.getName()));
+        modifyPartInventoryField.setText(String.valueOf(part.getStock()));
+        modifyPartPriceField.setText(String.valueOf(part.getPrice()));
+        modifyPartMaxField.setText(String.valueOf(part.getMax()));
+        modifyPartMinField.setText(String.valueOf(part.getMax()));
+
+       if (part instanceof InHouse) {
+           System.out.println(((InHouse) part).getMachineId());
+           modifyToggleField.setText(String.valueOf(((InHouse) part).getMachineId()));
+           modifyPartOutsourcedButton.setSelected(false);
+           toggleLabel.setText("Machine ID");
+       } else {
+           modifyToggleField.setText(String.valueOf(((Outsourced) part).getCompanyName()));
+           modifyPartOutsourcedButton.setSelected(true);
+           toggleLabel.setText("Company Name");
+
+       }
+    }
 
     @FXML
     void onActionTogglePart(ActionEvent event) throws IOException {
@@ -40,6 +88,15 @@ public class ModifyPartFormController implements Initializable {
         } else {
             toggleLabel.setText("Machine ID");
         }
+    }
+
+    @FXML
+    void onActionSavePart(ActionEvent event) throws IOException {
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
 

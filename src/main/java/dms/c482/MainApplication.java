@@ -33,7 +33,6 @@ public class MainApplication extends Application {
         Inventory.addProduct(product1);
         Inventory.addProduct(product2);
 
-
         launch();
 
     }
