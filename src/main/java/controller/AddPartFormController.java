@@ -76,17 +76,14 @@ public class AddPartFormController implements Initializable {
             double partPrice = Double.parseDouble(addPartPriceField.getText());
             int partMax = Integer.parseInt(addPartMaxField.getText());
             int partMin = Integer.parseInt(addPartMinField.getText());
-            boolean partInHouse;
 
             //Check radio button selected
             if(addPartInHouseButton.isSelected()) {
-                partInHouse = true;
                 //add InHouse part
                 int partMachineId = Integer.parseInt(addPartToggleField.getText());
                 InHouse newInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
                 Inventory.addPart(newInhousePart);
             } else {
-                partInHouse = false;
                 //add Outsourced part
                 String partCompanyName = addPartToggleField.getText();
                 Outsourced newOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);

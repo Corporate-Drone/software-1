@@ -106,7 +106,7 @@ public class MainMenuController implements Initializable {
             loader.load();
 
             ModifyPartFormController MPController = loader.getController(); //loads controller associated with fxml doc
-            MPController.sendPart(partsTableView.getSelectionModel().getSelectedItem());
+            MPController.sendPart(partsTableView.getSelectionModel().getSelectedItem()); //send part to ModifyPartFormController
 
             stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
@@ -129,6 +129,7 @@ public class MainMenuController implements Initializable {
                 //remove part from Inventory
                 Part selectedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
                 Inventory.deletePart(selectedPart);
+                searchPartsBar.clear();
                 partsTableView.refresh();
             }
         }

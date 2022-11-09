@@ -61,6 +61,16 @@ public class Inventory {
         return null;
     }
 
+    public static void updatePart(int index, Part selectedPart) {
+        //search for existing object
+        for(Part part : Inventory.getAllParts()){
+            if(part.getId() == selectedPart.getId()) {
+                //replace object
+                Inventory.getAllParts().set(index, selectedPart);
+            }
+        }
+    }
+
     //delete part
     public static boolean deletePart(Part selectedPart) {
         for(Part part : getAllParts()) {
@@ -89,7 +99,6 @@ public class Inventory {
 
 
 
-//    updatePart(index:int, selectedPart:Part):void
 //    updateProduct(index:int, newProduct:Product):void
 
     public static ObservableList<Part> getAllParts() {

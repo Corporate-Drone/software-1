@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.InHouse;
+import model.Inventory;
 import model.Outsourced;
 import model.Part;
 
@@ -20,6 +21,7 @@ public class ModifyPartFormController implements Initializable {
 
     Stage stage;
     Parent scene;
+    Part displayedPart; //part that fills fields
 
     @FXML
     private ToggleGroup ModifyPart;
@@ -79,6 +81,8 @@ public class ModifyPartFormController implements Initializable {
            toggleLabel.setText("Company Name");
 
        }
+
+       displayedPart = part;
     }
 
     @FXML
@@ -92,11 +96,41 @@ public class ModifyPartFormController implements Initializable {
 
     @FXML
     void onActionSavePart(ActionEvent event) throws IOException {
+        int partIndex = Inventory.getAllParts().indexOf(displayedPart);
 
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        try {
+            int partId = Integer.parseInt(modifyPartId.getText());
+            String partName = modifyPartNameField.getText();
+            int partInventory = Integer.parseInt(modifyPartInventoryField.getText());
+            double partPrice = Double.parseDouble(modifyPartPriceField.getText());
+            int partMax = Integer.parseInt(modifyPartMaxField.getText());
+            int partMin = Integer.parseInt(modifyPartMinField.getText());
+
+            //Check radio button selected
+            if(modifyPartInHouseButton.isSelected()) {
+                //update InHouse part
+                int partMachineId = Integer.parseInt(modifyToggleField.getText());
+                InHouse updatedInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
+                Inventory.updatePart(partIndex, updatedInhousePart);
+            } else {
+                //update Outsourced part
+                String partCompanyName = modifyToggleField.getText();
+                Outsourced updatedOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
+                Inventory.updatePart(partIndex, updatedOutsourcedPart);
+            }
+
+            //redirect after saving
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setContentText("Please enter a valid value for each Text Field!");
+            alert.showAndWait();
+        }
     }
 
 
