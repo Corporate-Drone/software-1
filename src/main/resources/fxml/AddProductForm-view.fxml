@@ -30,7 +30,7 @@
                   <Label text="Price/Cost" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.rowIndex="4" />
                   <Label text="Min" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <TextField editable="false" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
+                  <TextField fx:id="addProductIdField" editable="false" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                   <TextField fx:id="addProductInventoryField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="addProductPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="addProductMaxField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -41,13 +41,13 @@
          </children>
       </VBox>
       <Button fx:id="addProductCancelFormButton" layoutX="1055.0" layoutY="639.0" mnemonicParsing="false" onAction="#onActionCancel" text="Cancel" />
-      <Button fx:id="addProductSaveFormButton" layoutX="963.0" layoutY="639.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="addProductSaveFormButton" layoutX="963.0" layoutY="639.0" mnemonicParsing="false" onAction="#onActionSaveProduct" text="Save" />
       <Label layoutX="52.0" layoutY="44.0" text="Add Product">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="addProductSearchFormField" layoutX="947.0" layoutY="49.0" prefHeight="25.0" prefWidth="160.0" promptText="Search by Part ID or Name" />
+      <TextField fx:id="addProductSearchFormField" layoutX="947.0" layoutY="49.0" onAction="#onActionSearchPart" prefHeight="25.0" prefWidth="160.0" promptText="Search by Part ID or Name" />
       <TableView fx:id="addProductTable" layoutX="607.0" layoutY="110.0" prefHeight="200.0" prefWidth="500.0">
         <columns>
           <TableColumn fx:id="addProductIdCol" prefWidth="125.0" text="Part ID" />
@@ -64,7 +64,7 @@
             <TableColumn fx:id="addProductAsscPriceCol" prefWidth="125.0" text="Price/ Cost per Unit" />
          </columns>
       </TableView>
-      <Button fx:id="addProductAddFormButton" layoutX="1055.0" layoutY="338.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addProductAddFormButton" layoutX="1055.0" layoutY="338.0" mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
       <Button fx:id="addProductRemoveFormButton" layoutX="963.0" layoutY="601.0" mnemonicParsing="false" onAction="#onActionRemovePart" text="Remove Associated Part" />
    </children>
 </AnchorPane>

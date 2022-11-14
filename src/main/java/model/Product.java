@@ -78,7 +78,7 @@ public class Product {
     }
 
     //remove associated part
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+    public static boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         for(Part part : Product.getAllAssociatedParts()) {
             if(part.getId() == selectedAssociatedPart.getId()) {
                 //returns true or false

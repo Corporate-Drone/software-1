@@ -68,10 +68,9 @@ public class ModifyPartFormController implements Initializable {
         modifyPartInventoryField.setText(String.valueOf(part.getStock()));
         modifyPartPriceField.setText(String.valueOf(part.getPrice()));
         modifyPartMaxField.setText(String.valueOf(part.getMax()));
-        modifyPartMinField.setText(String.valueOf(part.getMax()));
+        modifyPartMinField.setText(String.valueOf(part.getMin()));
 
        if (part instanceof InHouse) {
-           System.out.println(((InHouse) part).getMachineId());
            modifyToggleField.setText(String.valueOf(((InHouse) part).getMachineId()));
            modifyPartOutsourcedButton.setSelected(false);
            toggleLabel.setText("Machine ID");

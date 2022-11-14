@@ -224,6 +224,7 @@ public class MainMenuController implements Initializable {
                 //remove part from Inventory
                 Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
                 Inventory.deleteProduct(selectedProduct);
+                searchProductsBar.clear();
                 productsTableView.refresh();
             }
         }
