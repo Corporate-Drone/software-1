@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,21 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddProductFormController implements Initializable {
+
+    private static ObservableList<Part> associatedProductParts = FXCollections.observableArrayList();
+
+    private void addAssociatedProductPart (Part part) {
+        associatedProductParts.add(part);
+    }
+
+    private boolean deleteAssociatedProductPart (Part selectedPart) {
+        associatedProductParts.remove(selectedPart);
+        return true;
+    }
+
+    private ObservableList<Part> getAllAssociatedProductParts() {
+        return associatedProductParts;
+    }
 
     @FXML
     private Button addProductAddFormButton;
@@ -100,8 +116,13 @@ public class AddProductFormController implements Initializable {
 
             Product newProduct = new Product(productId,productName,productPrice,productInventory,productMin,productMax);
             Inventory.addProduct(newProduct);
-            System.out.println(Inventory.getAllProducts());
 
+            //add associated parts to product
+            if (!associatedProductParts.isEmpty()) {
+                for (Part addedPart : associatedProductParts) {
+                    newProduct.addAssociatedPart(addedPart);
+                }
+            }
 
             //redirect after saving
             stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -153,7 +174,8 @@ public class AddProductFormController implements Initializable {
     void onActionAddPart(ActionEvent event) throws IOException {
 
         if(addProductTable.getSelectionModel().getSelectedItem() != null) {
-            Product.addAssociatedPart(addProductTable.getSelectionModel().getSelectedItem());
+//            Product.addAssociatedPart(addProductTable.getSelectionModel().getSelectedItem());
+            addAssociatedProductPart(addProductTable.getSelectionModel().getSelectedItem());
             addProductAsscTable.refresh();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please select a part to add.");
@@ -172,7 +194,8 @@ public class AddProductFormController implements Initializable {
 
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 Part selectedPart = (Part) addProductAsscTable.getSelectionModel().getSelectedItem();
-                Product.deleteAssociatedPart(selectedPart);
+//                Product.deleteAssociatedPart(selectedPart);
+                deleteAssociatedProductPart(selectedPart);
                 addProductAsscTable.refresh();
             }
         }
@@ -192,7 +215,9 @@ public class AddProductFormController implements Initializable {
         addProductInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         addProductPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        addProductAsscTable.setItems(Product.getAllAssociatedParts());
+//        addProductAsscTable.setItems(Product.getAllAssociatedParts());
+
+        addProductAsscTable.setItems(getAllAssociatedProductParts());
         addProductAsscIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         addProductAsscPartCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addProductAsscInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));

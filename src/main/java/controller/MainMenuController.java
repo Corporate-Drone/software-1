@@ -153,17 +153,22 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
-        //casing, lets event handler know cause of event is a button
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow(); //reference variable
 
-        //load fxml
-        scene = FXMLLoader.load(getClass().getResource("/fxml/ModifyProductForm-view.fxml"));
+        if (productsTableView.getSelectionModel().getSelectedItem() != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/ModifyProductForm-view.fxml"));
+            loader.load();
 
-        //add scene to stage
-        stage.setScene(new Scene(scene));
+            ModifyProductFormController MPController = loader.getController(); //loads controller associated with fxml doc
+            MPController.sendProduct(productsTableView.getSelectionModel().getSelectedItem()); //send part to ModifyPartFormController
 
-        //show stage
-        stage.show();
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        }
+
     }
 
     @FXML

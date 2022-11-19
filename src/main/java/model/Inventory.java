@@ -97,9 +97,15 @@ public class Inventory {
         return false;
     }
 
-
-
-//    updateProduct(index:int, newProduct:Product):void
+    public static void updateProduct(int index, Product newProduct) {
+    //search for existing object
+        for(Product product : Inventory.getAllProducts()){
+            if(product.getId() == newProduct.getId()) {
+                //replace object
+                Inventory.getAllProducts().set(index, newProduct);
+            }
+        }
+    }
 
     public static ObservableList<Part> getAllParts() {
         return allParts;
