@@ -15,6 +15,7 @@ import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyPartFormController implements Initializable {
@@ -105,24 +106,32 @@ public class ModifyPartFormController implements Initializable {
             int partMax = Integer.parseInt(modifyPartMaxField.getText());
             int partMin = Integer.parseInt(modifyPartMinField.getText());
 
-            //Check radio button selected
-            if(modifyPartInHouseButton.isSelected()) {
-                //update InHouse part
-                int partMachineId = Integer.parseInt(modifyToggleField.getText());
-                InHouse updatedInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
-                Inventory.updatePart(partIndex, updatedInhousePart);
+            if (partMin > partMax) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Min should be less than Max and Max should be greater than min.");
+                Optional<ButtonType> result = alert.showAndWait();
+            } else if(partInventory > partMax || partInventory < partMin) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inv should be between min and max values.");
+                Optional<ButtonType> result = alert.showAndWait();
             } else {
-                //update Outsourced part
-                String partCompanyName = modifyToggleField.getText();
-                Outsourced updatedOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
-                Inventory.updatePart(partIndex, updatedOutsourcedPart);
-            }
+                //Check radio button selected
+                if(modifyPartInHouseButton.isSelected()) {
+                    //update InHouse part
+                    int partMachineId = Integer.parseInt(modifyToggleField.getText());
+                    InHouse updatedInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
+                    Inventory.updatePart(partIndex, updatedInhousePart);
+                } else {
+                    //update Outsourced part
+                    String partCompanyName = modifyToggleField.getText();
+                    Outsourced updatedOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
+                    Inventory.updatePart(partIndex, updatedOutsourcedPart);
+                }
 
-            //redirect after saving
-            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
-            stage.setScene(new Scene(scene));
-            stage.show();
+                //redirect after saving
+                stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
+                stage.setScene(new Scene(scene));
+                stage.show();
+            }
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);

@@ -114,22 +114,28 @@ public class AddProductFormController implements Initializable {
             int productMax = Integer.parseInt(addProductMaxField.getText());
             int productMin = Integer.parseInt(addProductMinField.getText());
 
-            Product newProduct = new Product(productId,productName,productPrice,productInventory,productMin,productMax);
-            Inventory.addProduct(newProduct);
+            if (productMin > productMax) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Min should be less than Max and Max should be greater than min.");
+                Optional<ButtonType> result = alert.showAndWait();
+            } else if(productInventory > productMax || productInventory < productMin) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Inv should be between min and max values.");
+                Optional<ButtonType> result = alert.showAndWait();
+            } else {
+                Product newProduct = new Product(productId,productName,productPrice,productInventory,productMin,productMax);
+                Inventory.addProduct(newProduct);
 
-            //add associated parts to product
-            if (!associatedProductParts.isEmpty()) {
-                for (Part addedPart : associatedProductParts) {
-                    newProduct.addAssociatedPart(addedPart);
+                //add associated parts to product
+                if (!associatedProductParts.isEmpty()) {
+                    for (Part addedPart : associatedProductParts) {
+                        newProduct.addAssociatedPart(addedPart);
+                    }
                 }
+                //redirect after saving
+                stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
+                stage.setScene(new Scene(scene));
+                stage.show();
             }
-
-            //redirect after saving
-            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
-            stage.setScene(new Scene(scene));
-            stage.show();
-
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
