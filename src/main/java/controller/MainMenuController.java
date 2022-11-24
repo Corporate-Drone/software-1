@@ -228,9 +228,16 @@ public class MainMenuController implements Initializable {
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 //remove part from Inventory
                 Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-                Inventory.deleteProduct(selectedProduct);
-                searchProductsBar.clear();
-                productsTableView.refresh();
+                //check if product has parts associated
+                if(selectedProduct.getAllAssociatedParts().size() > 0) {
+                    Alert partAlert = new Alert(Alert.AlertType.WARNING, "There are part(s) associated with this product and cannot be deleted.");
+                    Optional<ButtonType> partAlertResult = partAlert.showAndWait();
+                } else {
+                    Inventory.deleteProduct(selectedProduct);
+                    searchProductsBar.clear();
+                    productsTableView.refresh();
+                }
+
             }
         }
     }
