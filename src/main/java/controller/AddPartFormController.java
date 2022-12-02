@@ -17,6 +17,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller logic that adds a Part to the application
+ */
 public class AddPartFormController implements Initializable {
 
     Stage stage;
@@ -59,6 +62,11 @@ public class AddPartFormController implements Initializable {
     private Label toggleLabel;
 
 
+    /**
+     * The select radio button toggles the text field label between Company Name and Machine ID
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionTogglePart(ActionEvent event) throws IOException {
         if(event.getSource() == addPartOutsourcedButton) {
@@ -68,6 +76,14 @@ public class AddPartFormController implements Initializable {
         }
     }
 
+    /**
+     * Saves the new Part (InHouse or Outsourced) and redirects to main menu
+     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
+     * Runtime Error: If the max value is less than min, an error message will be displayed
+     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSavePart(ActionEvent event) throws IOException{
         try {
@@ -115,6 +131,11 @@ public class AddPartFormController implements Initializable {
 
     }
 
+    /**
+     * Cancels adding a Part and redirects to main menu
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -123,6 +144,11 @@ public class AddPartFormController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Initializes the Add Part Form
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

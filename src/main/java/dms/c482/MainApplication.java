@@ -11,7 +11,15 @@ import model.Product;
 
 import java.io.IOException;
 
+/**
+ * MainApplication class that loads initial scene and Inventory
+ */
 public class MainApplication extends Application {
+    /**
+     * Loads the main screen
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/fxml/MainMenu-view.fxml"));
@@ -21,6 +29,10 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Adds Inventory data and loads the application
+     * @param args
+     */
     public static void main(String[] args) {
         InHouse inhouse1 = new InHouse(1,"Sac",19.00,5,1,7,87);
         Inventory.addPart(inhouse1);

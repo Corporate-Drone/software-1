@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Part class provided by WGU
+ */
 public abstract class Part {
     private int id;
     private String name;

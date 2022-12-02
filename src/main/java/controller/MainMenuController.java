@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller logic for the main menu screen
+ */
 public class MainMenuController implements Initializable {
 
     Stage stage;
@@ -82,6 +85,11 @@ public class MainMenuController implements Initializable {
     private TextField searchProductsBar;
 
 
+    /**
+     * Loads and redirects to the Add Part Form
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionAddParts(ActionEvent event) throws IOException {
         //casing, lets event handler know cause of event is a button
@@ -98,6 +106,12 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Loads the Part data of the selected Part and redirects to the Modify Part Form
+     * Runtime Error: If no Part is selected, the modify button will not function
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionModifyParts(ActionEvent event) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedItem() != null) {
@@ -117,6 +131,12 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * The Part selected will be deleted and the table will be refreshed
+     * Runtime Error: If no Part is selected, the delete button will not function
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionDeleteParts(ActionEvent event) throws IOException {
         //check if the table has an item selected before attempting action
@@ -136,6 +156,11 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Loads and redirects to the Add Product Form
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
         //casing, lets event handler know cause of event is a button
@@ -151,6 +176,12 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads the Part data of the selected Part and redirects to the Modify Part Form
+     * Runtime Error: If no Part is selected, the modify button will not function
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
 
@@ -171,6 +202,12 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Search for Part by full name or partial name
+     * Future Enhancement: Search for Part by Inventory Level or Price
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onPartsTableSearch(ActionEvent event) throws IOException {
         String queryString = searchPartsBar.getText();
@@ -194,6 +231,12 @@ public class MainMenuController implements Initializable {
         partsTableView.setItems(parts);
     }
 
+    /**
+     * Search for Product by full name or partial name
+     * Future Enhancement: Search for Product by Inventory Level or Price
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onProductsTableSearch(ActionEvent event) throws IOException {
         String queryString = searchProductsBar.getText();
@@ -217,6 +260,13 @@ public class MainMenuController implements Initializable {
         productsTableView.setItems(products);
     }
 
+    /**
+     * The Part selected will be deleted and the table will be refreshed
+     * Runtime Error: If no Part is selected, the delete button will not function
+     * Logical Error: If the selected Product has associated Parts, a notification will pop up
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionDeleteProduct(ActionEvent event) throws IOException {
         //check if the table has an item selected before attempting action
@@ -243,11 +293,20 @@ public class MainMenuController implements Initializable {
     }
 
 
+    /**
+     * Exits the application
+     * @param event
+     */
     @FXML
     void onActionExit(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * Load the main menu and populate the Parts and Products tables
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partsTableView.setItems(Inventory.getAllParts());

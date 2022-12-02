@@ -18,23 +18,42 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller logic that modifies a Product
+ */
 public class ModifyProductFormController implements Initializable {
 
     Stage stage;
     Parent scene;
     Product displayedProduct;
 
+    /**
+     * List of associated Parts for the Product
+     */
     private static ObservableList<Part> associatedProductParts = FXCollections.observableArrayList();
 
+    /**
+     * Adds a Part to be associated with the Product
+     * @param part the Part to be added
+     */
     private void addAssociatedProductPart (Part part) {
         associatedProductParts.add(part);
     }
 
+    /**
+     * Deletes a Part to be associated with the Product
+     * @param selectedPart the selected Part
+     * @return true or false
+     */
     private boolean deleteAssociatedProductPart (Part selectedPart) {
         associatedProductParts.remove(selectedPart);
         return true;
     }
 
+    /**
+     * Gets all Parts associated with the Product
+     * @return all associated Parts
+     */
     private ObservableList<Part> getAllAssociatedProductParts() {
         return associatedProductParts;
     }
@@ -102,6 +121,10 @@ public class ModifyProductFormController implements Initializable {
     @FXML
     private TableView<Part> modifyProductTable;
 
+    /**
+     * Loads the selected Product and populates the fields accordingly
+     * @param product the selected Product from the main menu
+     */
     public void sendProduct(Product product) {
         modifyProductIdField.setText(String.valueOf(product.getId()));
         modifyProductNameField.setText(String.valueOf(product.getName()));
@@ -122,6 +145,12 @@ public class ModifyProductFormController implements Initializable {
 
     }
 
+    /**
+     * Search for Part by full name or partial name
+     * Future Enhancement: Search for Part by Inventory Level or Price
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSearchPart(ActionEvent event) throws IOException {
         String queryString = modifyProductSearchFormField.getText();
@@ -145,6 +174,11 @@ public class ModifyProductFormController implements Initializable {
         modifyProductTable.setItems(parts);
     }
 
+    /**
+     * Cancels modifying a Product and redirects to the main menu
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         modifyProductAsscTable.getItems().clear();
@@ -154,6 +188,14 @@ public class ModifyProductFormController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Saves the changes made to the Product and any associated Parts and redirects to Main menu
+     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
+     * Runtime Error: If the max value is less than min, an error message will be displayed
+     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSaveProduct(ActionEvent event) throws IOException {
         int partIndex = Inventory.getAllProducts().indexOf(displayedProduct);
@@ -196,6 +238,12 @@ public class ModifyProductFormController implements Initializable {
         modifyProductAsscTable.getItems().clear();
     }
 
+    /**
+     * Adds selected Part to associated Part table
+     * Runtime Error: If no Part is selected, the delete button will not function
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
 
@@ -210,6 +258,11 @@ public class ModifyProductFormController implements Initializable {
 
     }
 
+    /**
+     * Removes selected Part from associated Parts table
+     * Runtime Error: If no Part is selected, the remove button will not function
+     * @param event
+     */
     @FXML
     void onActionRemovePart(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this part?");
@@ -230,6 +283,11 @@ public class ModifyProductFormController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * Initializes the Modify Product Form and sets the Parts and Associated Parts table values
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         modifyProductTable.setItems(Inventory.getAllParts());

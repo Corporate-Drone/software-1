@@ -18,6 +18,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller logic that modifies a Part
+ */
 public class ModifyPartFormController implements Initializable {
 
     Stage stage;
@@ -63,6 +66,10 @@ public class ModifyPartFormController implements Initializable {
     @FXML
     private Label toggleLabel;
 
+    /**
+     * Loads the selected Part and populates the fields accordingly
+     * @param part the selected Part from the main menu
+     */
     public void sendPart(Part part) {
         modifyPartId.setText(String.valueOf(part.getId()));
         modifyPartNameField.setText(String.valueOf(part.getName()));
@@ -85,6 +92,11 @@ public class ModifyPartFormController implements Initializable {
        displayedPart = part;
     }
 
+    /**
+     * The select radio button toggles the text field label between Company Name and Machine ID
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionTogglePart(ActionEvent event) throws IOException {
         if(event.getSource() == modifyPartOutsourcedButton) {
@@ -94,6 +106,14 @@ public class ModifyPartFormController implements Initializable {
         }
     }
 
+    /**
+     * Saves the changes made to the Part
+     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
+     * Runtime Error: If the max value is less than min, an error message will be displayed
+     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSavePart(ActionEvent event) throws IOException {
         int partIndex = Inventory.getAllParts().indexOf(displayedPart);
@@ -142,6 +162,11 @@ public class ModifyPartFormController implements Initializable {
     }
 
 
+    /**
+     * Cancels modifying a Part and redirects to the main menu
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -150,6 +175,11 @@ public class ModifyPartFormController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Initializes the Modify Part Form
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

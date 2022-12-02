@@ -20,19 +20,38 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller logic that adds a Product to the application
+ */
 public class AddProductFormController implements Initializable {
 
+    /**
+     * List of associated Parts for the Product
+     */
     private static ObservableList<Part> associatedProductParts = FXCollections.observableArrayList();
 
+    /**
+     * Adds a Part to be associated with the Product
+     * @param part the Part to be added
+     */
     private void addAssociatedProductPart (Part part) {
         associatedProductParts.add(part);
     }
 
+    /**
+     * Deletes a Part to be associated with the Product
+     * @param selectedPart the selected Part
+     * @return true or false
+     */
     private boolean deleteAssociatedProductPart (Part selectedPart) {
         associatedProductParts.remove(selectedPart);
         return true;
     }
 
+    /**
+     * Gets all Parts associated with the Product
+     * @return all associated Parts
+     */
     private ObservableList<Part> getAllAssociatedProductParts() {
         return associatedProductParts;
     }
@@ -104,6 +123,14 @@ public class AddProductFormController implements Initializable {
     Stage stage;
     Parent scene;
 
+    /**
+     * Saves a new Product and any associated Parts and redirects to Main menu
+     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
+     * Runtime Error: If the max value is less than min, an error message will be displayed
+     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSaveProduct(ActionEvent event) throws IOException {
         try {
@@ -145,6 +172,11 @@ public class AddProductFormController implements Initializable {
 
     }
 
+    /**
+     * Cancels adding a Product and redirects to main menu
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -153,6 +185,12 @@ public class AddProductFormController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Search for Part by full name or partial name
+     * Future Enhancement: Search for Part by Inventory Level or Price
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionSearchPart(ActionEvent event) throws IOException {
         String queryString = addProductSearchFormField.getText();
@@ -176,6 +214,12 @@ public class AddProductFormController implements Initializable {
         addProductTable.setItems(parts);
     }
 
+    /**
+     * Adds selected Part to associated Part table
+     * Runtime Error: If no Part is selected, the delete button will not function
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
 
@@ -191,6 +235,11 @@ public class AddProductFormController implements Initializable {
 
     }
 
+    /**
+     * Removes selected Part from associated Parts table
+     * Runtime Error: If no Part is selected, the remove button will not function
+     * @param event
+     */
     @FXML
     void onActionRemovePart(ActionEvent event) {
         if(addProductAsscTable.getSelectionModel().getSelectedItem() != null) {
@@ -208,11 +257,11 @@ public class AddProductFormController implements Initializable {
 
     }
 
-    @FXML
-    void onActionExit(ActionEvent event) {
-        System.exit(0);
-    }
-
+    /**
+     * Initializes Add Product Form and sets the Parts and Associated Parts table values
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addProductTable.setItems(Inventory.getAllParts());
