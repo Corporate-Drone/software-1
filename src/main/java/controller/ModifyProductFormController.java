@@ -147,7 +147,7 @@ public class ModifyProductFormController implements Initializable {
 
     /**
      * Search for Part by full name or partial name
-     * Future Enhancement: Search for Part by Inventory Level or Price
+     * FUTURE ENHANCEMENT: Search for Part by Inventory Level or Price
      * @param event
      * @throws IOException
      */
@@ -165,7 +165,7 @@ public class ModifyProductFormController implements Initializable {
                 }
             }
         } catch(NumberFormatException e) {
-            //ignore
+
         }
         if(parts.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
@@ -190,9 +190,9 @@ public class ModifyProductFormController implements Initializable {
 
     /**
      * Saves the changes made to the Product and any associated Parts and redirects to Main menu
-     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
-     * Runtime Error: If the max value is less than min, an error message will be displayed
-     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * RUNTIME ERROR: If any field is blank or contains incorrect values, an error message will be displayed
+     * RUNTIME ERROR: If the max value is less than min, an error message will be displayed
+     * RUNTIME ERROR: If the inventory amount is not within the min and max value, an error message will be displayed
      * @param event
      * @throws IOException
      */
@@ -223,7 +223,6 @@ public class ModifyProductFormController implements Initializable {
                 }
                 Inventory.updateProduct(partIndex, updatedProduct);
 
-                //redirect after saving
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
                 stage.setScene(new Scene(scene));
@@ -240,7 +239,7 @@ public class ModifyProductFormController implements Initializable {
 
     /**
      * Adds selected Part to associated Part table
-     * Runtime Error: If no Part is selected, the delete button will not function
+     * RUNTIME ERROR: If no Part is selected, the delete button will not function
      * @param event
      * @throws IOException
      */
@@ -260,27 +259,25 @@ public class ModifyProductFormController implements Initializable {
 
     /**
      * Removes selected Part from associated Parts table
-     * Runtime Error: If no Part is selected, the remove button will not function
+     * RUNTIME ERROR: If no Part is selected, the remove button will bring up a noticiation
      * @param event
      */
     @FXML
     void onActionRemovePart(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this part?");
+        if(modifyProductAsscTable.getSelectionModel().getSelectedItem() != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this part?");
+            Optional<ButtonType> result = alert.showAndWait();
 
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if(result.isPresent() && result.get() == ButtonType.OK) {
-            //delete part
-            Part selectedPart = (Part) modifyProductAsscTable.getSelectionModel().getSelectedItem();
-//                Product.deleteAssociatedPart(selectedPart);
-            deleteAssociatedProductPart(selectedPart);
-            modifyProductAsscTable.refresh();
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                Part selectedPart = (Part) modifyProductAsscTable.getSelectionModel().getSelectedItem();
+                deleteAssociatedProductPart(selectedPart);
+                modifyProductAsscTable.refresh();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Part to remove.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
-    }
 
-    @FXML
-    void onActionExit(ActionEvent event) {
-        System.exit(0);
     }
 
     /**
@@ -296,7 +293,6 @@ public class ModifyProductFormController implements Initializable {
         modifyProductInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         modifyProductPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-//        modifyProductAsscTable.setItems(Product.getAllAssociatedParts());
         modifyProductAsscIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         modifyProductAsscPartCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         modifyProductAsscInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));

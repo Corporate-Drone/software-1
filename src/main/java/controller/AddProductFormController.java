@@ -125,9 +125,9 @@ public class AddProductFormController implements Initializable {
 
     /**
      * Saves a new Product and any associated Parts and redirects to Main menu
-     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
-     * Runtime Error: If the max value is less than min, an error message will be displayed
-     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * RUNTIME ERROR: If any field is blank or contains incorrect values, an error message will be displayed
+     * RUNTIME ERROR: If the max value is less than min, an error message will be displayed
+     * RUNTIME ERROR: If the inventory amount is not within the min and max value, an error message will be displayed
      * @param event
      * @throws IOException
      */
@@ -151,13 +151,12 @@ public class AddProductFormController implements Initializable {
                 Product newProduct = new Product(productId,productName,productPrice,productInventory,productMin,productMax);
                 Inventory.addProduct(newProduct);
 
-                //add associated parts to product
                 if (!associatedProductParts.isEmpty()) {
                     for (Part addedPart : associatedProductParts) {
                         newProduct.addAssociatedPart(addedPart);
                     }
                 }
-                //redirect after saving
+
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
                 stage.setScene(new Scene(scene));
@@ -187,7 +186,7 @@ public class AddProductFormController implements Initializable {
 
     /**
      * Search for Part by full name or partial name
-     * Future Enhancement: Search for Part by Inventory Level or Price
+     * FUTURE ENHANCEMENT: Search for Part by Inventory Level or Price
      * @param event
      * @throws IOException
      */
@@ -205,7 +204,7 @@ public class AddProductFormController implements Initializable {
                 }
             }
         } catch(NumberFormatException e) {
-            //ignore
+
         }
         if(parts.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
@@ -216,7 +215,7 @@ public class AddProductFormController implements Initializable {
 
     /**
      * Adds selected Part to associated Part table
-     * Runtime Error: If no Part is selected, the delete button will not function
+     * RUNTIME ERROR: If no Part is selected, the delete button will not function
      * @param event
      * @throws IOException
      */
@@ -224,12 +223,10 @@ public class AddProductFormController implements Initializable {
     void onActionAddPart(ActionEvent event) throws IOException {
 
         if(addProductTable.getSelectionModel().getSelectedItem() != null) {
-//            Product.addAssociatedPart(addProductTable.getSelectionModel().getSelectedItem());
             addAssociatedProductPart(addProductTable.getSelectionModel().getSelectedItem());
             addProductAsscTable.refresh();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Please select a part to add.");
-
             Optional<ButtonType> result = alert.showAndWait();
         }
 
@@ -237,22 +234,23 @@ public class AddProductFormController implements Initializable {
 
     /**
      * Removes selected Part from associated Parts table
-     * Runtime Error: If no Part is selected, the remove button will not function
+     * RUNTIME ERROR: If no Part is selected, the remove button will not function
      * @param event
      */
     @FXML
     void onActionRemovePart(ActionEvent event) {
         if(addProductAsscTable.getSelectionModel().getSelectedItem() != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this part?");
-
             Optional<ButtonType> result = alert.showAndWait();
 
             if(result.isPresent() && result.get() == ButtonType.OK) {
                 Part selectedPart = (Part) addProductAsscTable.getSelectionModel().getSelectedItem();
-//                Product.deleteAssociatedPart(selectedPart);
                 deleteAssociatedProductPart(selectedPart);
                 addProductAsscTable.refresh();
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Part to remove.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }
@@ -269,8 +267,6 @@ public class AddProductFormController implements Initializable {
         addProductNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         addProductInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         addProductPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-//        addProductAsscTable.setItems(Product.getAllAssociatedParts());
 
         addProductAsscTable.setItems(getAllAssociatedProductParts());
         addProductAsscIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));

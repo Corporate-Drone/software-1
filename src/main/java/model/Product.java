@@ -175,7 +175,6 @@ public class Product {
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         for(Part part : associatedParts) {
             if(part.getId() == selectedAssociatedPart.getId()) {
-                //returns true or false
                 return associatedParts.remove(part);
             }
         }

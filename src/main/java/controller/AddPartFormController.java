@@ -64,7 +64,7 @@ public class AddPartFormController implements Initializable {
 
     /**
      * The select radio button toggles the text field label between Company Name and Machine ID
-     * @param event
+     * @param event Toggle type of Part action
      * @throws IOException
      */
     @FXML
@@ -78,9 +78,9 @@ public class AddPartFormController implements Initializable {
 
     /**
      * Saves the new Part (InHouse or Outsourced) and redirects to main menu
-     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
-     * Runtime Error: If the max value is less than min, an error message will be displayed
-     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * RUNTIME ERROR: If any field is blank or contains incorrect values, an error message will be displayed
+     * RUNTIME ERROR: If the max value is less than min, an error message will be displayed
+     * RUNTIME ERROR: If the inventory amount is not within the min and max value, an error message will be displayed
      * @param event
      * @throws IOException
      */
@@ -101,20 +101,15 @@ public class AddPartFormController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inv should be between min and max values.");
                 Optional<ButtonType> result = alert.showAndWait();
             } else {
-                //Check radio button selected
                 if(addPartInHouseButton.isSelected()) {
-                    //add InHouse part
                     int partMachineId = Integer.parseInt(addPartToggleField.getText());
                     InHouse newInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
                     Inventory.addPart(newInhousePart);
                 } else {
-                    //add Outsourced part
                     String partCompanyName = addPartToggleField.getText();
                     Outsourced newOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
                     Inventory.addPart(newOutsourcedPart);
                 }
-
-                //redirect after saving
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
                 stage.setScene(new Scene(scene));

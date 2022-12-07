@@ -102,10 +102,8 @@ public class Inventory {
      * @param selectedPart the modified Part
      */
     public static void updatePart(int index, Part selectedPart) {
-        //search for existing object
         for(Part part : Inventory.getAllParts()){
             if(part.getId() == selectedPart.getId()) {
-                //replace object
                 Inventory.getAllParts().set(index, selectedPart);
             }
         }
@@ -120,11 +118,9 @@ public class Inventory {
     public static boolean deletePart(Part selectedPart) {
         for(Part part : getAllParts()) {
             if(part.getId() == selectedPart.getId()) {
-                //returns true or false
                 return getAllParts().remove(part);
             }
         }
-        //no id found
         return false;
     }
 
@@ -137,13 +133,9 @@ public class Inventory {
     public static boolean deleteProduct(Product selectedProduct) {
         for(Product product : getAllProducts()) {
             if(product.getId() == selectedProduct.getId()) {
-                //call remove associated part
-
-                //returns true or false
                 return getAllProducts().remove(product);
             }
         }
-        //no id found
         return false;
     }
 
@@ -153,10 +145,8 @@ public class Inventory {
      * @param newProduct the modified Product
      */
     public static void updateProduct(int index, Product newProduct) {
-    //search for existing object
         for(Product product : Inventory.getAllProducts()){
             if(product.getId() == newProduct.getId()) {
-                //replace object
                 Inventory.getAllProducts().set(index, newProduct);
             }
         }

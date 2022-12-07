@@ -11,6 +11,8 @@ import model.Product;
 
 import java.io.IOException;
 
+//JavaDocs located in "javadocs" folder
+
 /**
  * MainApplication class that loads initial scene and Inventory
  */

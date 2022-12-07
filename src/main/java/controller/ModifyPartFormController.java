@@ -25,7 +25,7 @@ public class ModifyPartFormController implements Initializable {
 
     Stage stage;
     Parent scene;
-    Part displayedPart; //part that fills fields
+    Part displayedPart;
 
     @FXML
     private ToggleGroup ModifyPart;
@@ -108,9 +108,9 @@ public class ModifyPartFormController implements Initializable {
 
     /**
      * Saves the changes made to the Part
-     * Runtime Error: If any field is blank or contains incorrect values, an error message will be displayed
-     * Runtime Error: If the max value is less than min, an error message will be displayed
-     * Runtime Error: If the inventory amount is not within the min and max value, an error message will be displayed
+     * RUNTIME ERROR: If any field is blank or contains incorrect values, an error message will be displayed
+     * RUNTIME ERROR: If the max value is less than min, an error message will be displayed
+     * RUNTIME ERROR: If the inventory amount is not within the min and max value, an error message will be displayed
      * @param event
      * @throws IOException
      */
@@ -133,20 +133,15 @@ public class ModifyPartFormController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Inv should be between min and max values.");
                 Optional<ButtonType> result = alert.showAndWait();
             } else {
-                //Check radio button selected
                 if(modifyPartInHouseButton.isSelected()) {
-                    //update InHouse part
                     int partMachineId = Integer.parseInt(modifyToggleField.getText());
                     InHouse updatedInhousePart = new InHouse(partId,partName,partPrice,partInventory,partMin,partMax,partMachineId);
                     Inventory.updatePart(partIndex, updatedInhousePart);
                 } else {
-                    //update Outsourced part
                     String partCompanyName = modifyToggleField.getText();
                     Outsourced updatedOutsourcedPart = new Outsourced(partId,partName,partPrice,partInventory,partMin,partMax,partCompanyName);
                     Inventory.updatePart(partIndex, updatedOutsourcedPart);
                 }
-
-                //redirect after saving
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/fxml/MainMenu-view.fxml"));
                 stage.setScene(new Scene(scene));

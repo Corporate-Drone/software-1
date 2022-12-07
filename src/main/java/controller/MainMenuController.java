@@ -108,7 +108,7 @@ public class MainMenuController implements Initializable {
 
     /**
      * Loads the Part data of the selected Part and redirects to the Modify Part Form
-     * Runtime Error: If no Part is selected, the modify button will not function
+     * RUNTIME ERROR: If no Part is selected, the modify button will not bring up a notification
      * @param event
      * @throws IOException
      */
@@ -126,6 +126,9 @@ public class MainMenuController implements Initializable {
             Parent scene = loader.getRoot();
             stage.setScene(new Scene(scene));
             stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Part to modify.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
 
 
@@ -133,25 +136,26 @@ public class MainMenuController implements Initializable {
 
     /**
      * The Part selected will be deleted and the table will be refreshed
-     * Runtime Error: If no Part is selected, the delete button will not function
+     * RUNTIME ERROR: If no Part is selected, the delete button will not function
      * @param event
      * @throws IOException
      */
     @FXML
     void onActionDeleteParts(ActionEvent event) throws IOException {
-        //check if the table has an item selected before attempting action
         if (partsTableView.getSelectionModel().getSelectedItem() != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
 
             Optional<ButtonType> result = alert.showAndWait();
 
             if(result.isPresent() && result.get() == ButtonType.OK) {
-                //remove part from Inventory
                 Part selectedPart = (Part) partsTableView.getSelectionModel().getSelectedItem();
                 Inventory.deletePart(selectedPart);
                 searchPartsBar.clear();
                 partsTableView.refresh();
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Part to delete.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }
@@ -163,22 +167,15 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
-        //casing, lets event handler know cause of event is a button
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow(); //reference variable
-
-        //load fxml
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/fxml/AddProductForm-view.fxml"));
-
-        //add scene to stage
         stage.setScene(new Scene(scene));
-
-        //show stage
         stage.show();
     }
 
     /**
      * Loads the Part data of the selected Part and redirects to the Modify Part Form
-     * Runtime Error: If no Part is selected, the modify button will not function
+     * RUNTIME ERROR: If no Part is selected, the modify button will bring up a notification
      * @param event
      * @throws IOException
      */
@@ -198,13 +195,16 @@ public class MainMenuController implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
 
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Product to modify.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
 
     }
 
     /**
      * Search for Part by full name or partial name
-     * Future Enhancement: Search for Part by Inventory Level or Price
+     * FUTURE ENHANCEMENT: Search for Part by Inventory Level or Price
      * @param event
      * @throws IOException
      */
@@ -222,7 +222,7 @@ public class MainMenuController implements Initializable {
                 }
             }
         } catch(NumberFormatException e) {
-            //ignore
+
         }
         if(parts.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
@@ -233,7 +233,7 @@ public class MainMenuController implements Initializable {
 
     /**
      * Search for Product by full name or partial name
-     * Future Enhancement: Search for Product by Inventory Level or Price
+     * FUTURE ENHANCEMENT: Search for Product by Inventory Level or Price
      * @param event
      * @throws IOException
      */
@@ -251,7 +251,7 @@ public class MainMenuController implements Initializable {
                 }
             }
         } catch(NumberFormatException e) {
-            //ignore
+
         }
         if(products.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Nothing was found!");
@@ -262,23 +262,18 @@ public class MainMenuController implements Initializable {
 
     /**
      * The Part selected will be deleted and the table will be refreshed
-     * Runtime Error: If no Part is selected, the delete button will not function
-     * Logical Error: If the selected Product has associated Parts, a notification will pop up
+     * RUNTIME ERROR: If no Part is selected, the delete button will bring up a notification
+     * LOGICAL ERROR: If the selected Product has associated Parts, a notification will pop up
      * @param event
      * @throws IOException
      */
     @FXML
     void onActionDeleteProduct(ActionEvent event) throws IOException {
-        //check if the table has an item selected before attempting action
         if (productsTableView.getSelectionModel().getSelectedItem() != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This item will be permanently deleted, do you want to continue?");
-
             Optional<ButtonType> result = alert.showAndWait();
-
             if(result.isPresent() && result.get() == ButtonType.OK) {
-                //remove part from Inventory
                 Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-                //check if product has parts associated
                 if(selectedProduct.getAllAssociatedParts().size() > 0) {
                     Alert partAlert = new Alert(Alert.AlertType.WARNING, "There are part(s) associated with this product and cannot be deleted.");
                     Optional<ButtonType> partAlertResult = partAlert.showAndWait();
@@ -289,6 +284,9 @@ public class MainMenuController implements Initializable {
                 }
 
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Please select a Product to delete.");
+            Optional<ButtonType> result = alert.showAndWait();
         }
     }
 
